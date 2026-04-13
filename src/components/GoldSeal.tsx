@@ -8,15 +8,15 @@ const GoldSeal = ({ text = "100% Guaranteed", size = "md" }: { text?: string; si
   return (
     <div className={`${sizeClasses[size]} relative flex items-center justify-center`}>
       {/* Outer ring */}
-      <div className="absolute inset-0 rounded-full border-4 border-primary opacity-40" />
+      <div className="absolute inset-0 rounded-full border-2 border-brand-spindle/30" />
       {/* Inner ring */}
-      <div className="absolute inset-2 rounded-full border-2 border-primary opacity-60" />
-      {/* Center fill */}
-      <div className="absolute inset-4 rounded-full bg-primary/10 border border-primary/30" />
+      <div className="absolute inset-2 rounded-full border border-primary/40" />
+      {/* Center fill — glass */}
+      <div className="absolute inset-4 rounded-full glass border-brand-silver/20" />
       {/* Text */}
       <div className="relative z-10 text-center px-4">
         <div className="text-primary font-heading font-bold leading-tight">{text}</div>
-        <div className="text-primary/60 text-[10px] mt-0.5 font-heading-alt">★ ★ ★</div>
+        <div className="text-brand-spindle/60 text-[10px] mt-0.5 font-heading-alt">★ ★ ★</div>
       </div>
     </div>
   );
