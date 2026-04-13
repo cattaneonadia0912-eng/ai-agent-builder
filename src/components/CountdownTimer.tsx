@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
 interface CountdownTimerProps {
-  targetDate?: string; // ISO string for date countdown
-  minutes?: number; // For minute-based countdown (upsell)
+  targetDate?: string;
+  minutes?: number;
   className?: string;
   labelClassName?: string;
 }
@@ -56,15 +56,17 @@ const CountdownTimer = ({ targetDate, minutes, className = "", labelClassName = 
       {blocks.map((block, i) => (
         <div key={block.label} className="flex items-center gap-2 md:gap-4">
           <div className="flex flex-col items-center">
-            <span className="font-heading-alt text-3xl md:text-5xl lg:text-6xl font-bold text-primary tabular-nums leading-none">
-              {String(block.value).padStart(2, "0")}
-            </span>
-            <span className={`text-xs md:text-sm mt-1 uppercase tracking-wider ${labelClassName || "text-brand-muted"}`}>
+            <div className="glass rounded-xl px-3 py-2 md:px-5 md:py-3 min-w-[3.5rem] md:min-w-[5rem]">
+              <span className="font-heading-alt text-3xl md:text-5xl lg:text-6xl font-bold text-brand-spindle tabular-nums leading-none block text-center">
+                {String(block.value).padStart(2, "0")}
+              </span>
+            </div>
+            <span className={`text-xs md:text-sm mt-2 uppercase tracking-wider ${labelClassName || "text-muted-foreground"}`}>
               {block.label}
             </span>
           </div>
           {i < blocks.length - 1 && (
-            <span className="text-primary text-2xl md:text-4xl font-bold -mt-4 md:-mt-5">:</span>
+            <span className="text-brand-silver/40 text-2xl md:text-4xl font-light -mt-4 md:-mt-5">:</span>
           )}
         </div>
       ))}
