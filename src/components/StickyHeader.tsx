@@ -19,7 +19,12 @@ const StickyHeader = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         visible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
-      } glass-strong`}
+      }`}
+      style={{
+        background: 'hsl(220 13% 10% / 0.92)',
+        borderBottom: '1px solid hsl(220 13% 20% / 0.25)',
+        boxShadow: '0 4px 24px -4px hsl(220 50% 4% / 0.5)',
+      }}
     >
       <div className="max-w-funnel mx-auto px-4 md:px-6 lg:px-8 flex items-center justify-between h-14 md:h-16">
         <span className="font-heading text-lg md:text-xl font-bold text-foreground tracking-tight">
