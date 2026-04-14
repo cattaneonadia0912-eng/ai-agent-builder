@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import { CheckCircle, Mail, Users, Monitor, Calendar, Clock, Mic, Award, Share2, Facebook, Linkedin } from "lucide-react";
+import { CheckCircle, Mail, Users, Monitor, Calendar, Clock, Mic, Award, Share2, Facebook, Linkedin, PartyPopper } from "lucide-react";
 import Footer from "@/components/Footer";
 
 const ThankYou = () => {
@@ -7,18 +7,18 @@ const ThankYou = () => {
   const isVip = searchParams.get("vip") === "true";
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="relative min-h-screen">
+      <div aria-hidden className="absolute inset-0 -z-10 gradient-dots-page" />
       {/* Confirmation hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-card via-background to-background" />
-        <div className="absolute inset-0 circuit-pattern opacity-30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-card/60 via-transparent to-transparent" />
         <div className="relative z-10 max-w-funnel mx-auto px-4 md:px-6 lg:px-8 py-20 md:py-28 lg:py-36 text-center">
           <div className="w-20 h-20 md:w-24 md:h-24 rounded-full glass border-2 border-primary flex items-center justify-center mx-auto">
             <CheckCircle className="w-10 h-10 md:w-12 md:h-12 text-primary" />
           </div>
 
           <h1 className="mt-6 font-heading text-3xl md:text-5xl lg:text-6xl font-bold text-foreground">
-            You're In! See You April 27th at <span className="text-primary">3 PM CST</span> 🎉
+            You're In! See You April 27th at <span className="text-primary">3 PM CST</span> <PartyPopper className="w-8 h-8 inline ml-2 text-accent" />
           </h1>
           <p className="mt-4 text-muted-foreground text-base md:text-lg font-body max-w-2xl mx-auto">
             Check your inbox — a confirmation email is on its way to{" "}

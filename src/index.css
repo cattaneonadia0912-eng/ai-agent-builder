@@ -4,24 +4,24 @@
 
 @layer base {
   :root {
-    /* New palette — sleek dark glassmorphism */
-    --background: 214 98% 12%;       /* deep navy ~#011E4A */
+    /* New palette — cool near-black with blue accent */
+    --background: 220 13% 8%;        /* near-black cool gray ~#12141A */
     --foreground: 24 24% 92%;        /* Narvik White #EFE9E5 */
 
-    --card: 214 98% 18%;             /* American Navy #01295C */
+    --card: 220 13% 11%;             /* elevated surface ~#181A20 */
     --card-foreground: 24 24% 92%;
 
-    --popover: 214 98% 18%;
+    --popover: 220 10% 14%;
     --popover-foreground: 24 24% 92%;
 
     --primary: 209 92% 35%;          /* Lebanese Blue #075AAA */
     --primary-foreground: 24 24% 92%;
 
-    --secondary: 214 98% 15%;        /* slightly lighter navy */
+    --secondary: 220 12% 18%;        /* neutral-cool gray */
     --secondary-foreground: 24 24% 92%;
 
-    --muted: 214 98% 18%;
-    --muted-foreground: 216 3% 66%;  /* Metallic Silver #A7A9AC */
+    --muted: 220 10% 15%;
+    --muted-foreground: 220 8% 65%;  /* cool gray secondary text */
 
     --accent: 359 83% 53%;           /* Funky Red #EB2226 */
     --accent-foreground: 0 0% 100%;
@@ -29,35 +29,35 @@
     --destructive: 359 83% 53%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 216 3% 66% / 0.25;     /* subtle silver border */
-    --input: 214 98% 22%;
-    --ring: 209 92% 35%;
+    --border: 220 13% 20%;           /* subtle cool-gray dividers */
+    --input: 220 13% 14%;            /* inset wells — darker than card */
+    --ring: 210 92% 50%;             /* brighter focus ring for accessibility */
 
     --radius: 0.75rem;
 
     /* Brand tokens */
     --brand-blue: 209 92% 35%;       /* #075AAA */
     --brand-red: 359 83% 53%;        /* #EB2226 */
-    --brand-navy: 214 98% 18%;       /* #01295C */
-    --brand-navy-deep: 214 98% 12%;  /* darker */
+    --brand-navy: 220 13% 11%;       /* remapped to new card surface */
+    --brand-navy-deep: 220 13% 8%;   /* remapped to new background */
     --brand-spindle: 215 59% 83%;    /* #B9CFED */
     --brand-narvik: 24 24% 92%;      /* #EFE9E5 */
     --brand-silver: 216 3% 66%;      /* #A7A9AC */
-    --brand-surface: 214 98% 18%;
+    --brand-surface: 220 13% 11%;
 
     /* Glass tokens */
-    --glass-bg: 214 98% 18% / 0.55;
-    --glass-border: 216 3% 66% / 0.2;
-    --glass-glow: 215 59% 83% / 0.08;
+    --glass-bg: 220 15% 16% / 0.55;
+    --glass-border: 220 13% 20% / 0.2;
+    --glass-glow: 210 30% 70% / 0.06;
 
-    --sidebar-background: 214 98% 18%;
+    --sidebar-background: 220 15% 6%;
     --sidebar-foreground: 24 24% 92%;
     --sidebar-primary: 209 92% 35%;
     --sidebar-primary-foreground: 24 24% 92%;
-    --sidebar-accent: 214 98% 22%;
+    --sidebar-accent: 220 13% 12%;
     --sidebar-accent-foreground: 24 24% 92%;
-    --sidebar-border: 216 3% 66% / 0.2;
-    --sidebar-ring: 209 92% 35%;
+    --sidebar-border: 220 13% 18%;
+    --sidebar-ring: 210 92% 50%;
   }
 }
 
@@ -93,6 +93,31 @@
     background-size: 24px 24px;
   }
 
+  /* Unified full-page background — dots + vertical gradient */
+  /* dot-mask uses hsl(220 13% 9%) as a midpoint between top (6%) and bottom (16%) */
+  /* @keyframes gradient-dots-page lives at root level (see bottom of file) */
+  .gradient-dots-page {
+    background-color: hsl(220 13% 9%);
+    background-image:
+      radial-gradient(circle at 50% 50%, transparent 1.5px, hsl(220 13% 9%) 0 8px, transparent 8px),
+      radial-gradient(circle at 50% 50%, transparent 1.5px, hsl(220 13% 9%) 0 8px, transparent 8px),
+      radial-gradient(circle at 50% 50%, hsl(209 92% 35% / 0.22), transparent 60%),
+      radial-gradient(circle at 50% 50%, hsl(359 83% 53% / 0.10), transparent 60%),
+      radial-gradient(circle at 50% 50%, hsl(215 59% 83% / 0.06), transparent 60%),
+      radial-gradient(ellipse  at 50% 50%, hsl(209 92% 55% / 0.12), transparent 60%),
+      linear-gradient(to bottom, hsl(220 13% 6%) 0%, hsl(220 13% 9%) 30%, hsl(220 15% 12%) 65%, hsl(220 18% 16%) 100%);
+    background-size:
+      10px 17.32px,
+      10px 17.32px,
+      200% 200%,
+      200% 200%,
+      200% 200%,
+      200% 17.32px,
+      100% 100%;
+    background-position: 0px 0px, 5px 8.66px, 70% 40%, 20% 75%, 80% 20%, 55% 8.66px, 0 0;
+    animation: gradient-dots-page 30s ease-in-out infinite;
+  }
+
   .font-heading {
     font-family: 'DM Sans', sans-serif;
   }
@@ -105,32 +130,44 @@
     font-family: 'Open Sans', sans-serif;
   }
 
+  .font-script {
+    font-family: 'Luxurious Script', cursive;
+  }
+
+  .glow-script {
+    text-shadow: 0 0 24px hsl(215 59% 83% / 0.35), 0 0 48px hsl(215 59% 83% / 0.15);
+  }
+
   /* Glassmorphism utilities */
   .glass {
-    background: hsla(214, 98%, 18%, 0.55);
+    background: hsl(220 15% 16% / 0.55);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid hsla(216, 3%, 66%, 0.2);
+    border: 1px solid hsl(220 13% 20% / 0.2);
     box-shadow:
-      inset 0 1px 0 0 hsla(215, 59%, 83%, 0.08),
-      0 8px 32px -8px hsla(214, 98%, 10%, 0.4);
+      inset 0 1px 0 0 hsl(210 30% 70% / 0.06),
+      inset 0 -1px 0 0 hsl(220 50% 4% / 0.2),
+      0 8px 32px -8px hsl(220 50% 4% / 0.4);
   }
 
   .glass-strong {
-    background: hsla(214, 98%, 18%, 0.7);
+    background: hsl(220 15% 16% / 0.70);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid hsla(216, 3%, 66%, 0.25);
+    border: 1px solid hsl(220 13% 20% / 0.25);
     box-shadow:
-      inset 0 1px 0 0 hsla(215, 59%, 83%, 0.1),
-      0 12px 40px -12px hsla(214, 98%, 10%, 0.5);
+      inset 0 1px 0 0 hsl(210 30% 70% / 0.06),
+      inset 0 -1px 0 0 hsl(220 50% 4% / 0.2),
+      0 12px 40px -12px hsl(220 50% 4% / 0.5);
   }
 
   .glass-subtle {
-    background: hsla(214, 98%, 18%, 0.35);
+    background: hsl(220 15% 16% / 0.35);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid hsla(216, 3%, 66%, 0.12);
+    border: 1px solid hsl(220 13% 20% / 0.12);
+    box-shadow:
+      inset 0 1px 0 0 hsl(210 30% 70% / 0.04);
   }
 
   /* Glow effects */
@@ -145,4 +182,48 @@
   .glow-spindle {
     box-shadow: inset 0 1px 0 0 hsla(215, 59%, 83%, 0.15);
   }
+}
+
+/* ─── Keyframes (must live outside @layer so browsers register them) ─── */
+
+@keyframes gradient-dots {
+  0%, 100% {
+    background-position:
+      0px 0px, 5px 8.66px,
+      70% 40%, 20% 75%, 80% 20%, 55% 8.66px;
+  }
+  50% {
+    background-position:
+      0px 0px, 5px 8.66px,
+      30% 65%, 75% 25%, 25% 75%, 40% 8.66px;
+  }
+}
+
+@keyframes gradient-dots-page {
+  /* 0% and 100% identical — seamless loop */
+  /* Layer 7 (vertical gradient) stays fixed at 0 0 */
+  0%, 100% {
+    background-position:
+      0px 0px, 5px 8.66px,
+      70% 40%, 20% 75%, 80% 20%, 55% 8.66px,
+      0 0;
+  }
+  50% {
+    background-position:
+      0px 0px, 5px 8.66px,
+      30% 65%, 75% 25%, 25% 75%, 40% 8.66px,
+      0 0;
+  }
+}
+
+@keyframes orb-drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(30px, -20px) scale(1.05); }
+  66%       { transform: translate(-20px, 15px) scale(0.97); }
+}
+
+@keyframes orb-drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40%       { transform: translate(-25px, 20px) scale(1.04); }
+  70%       { transform: translate(15px, -10px) scale(0.98); }
 }

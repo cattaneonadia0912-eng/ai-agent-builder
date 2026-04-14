@@ -1,6 +1,6 @@
 import { useState, FormEvent } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
-import { CheckCircle, Shield, AlertTriangle, CreditCard, Lock } from "lucide-react";
+import { CheckCircle, Shield, AlertTriangle, CreditCard, Lock, PartyPopper } from "lucide-react";
 import CountdownTimer from "@/components/CountdownTimer";
 import Footer from "@/components/Footer";
 
@@ -41,12 +41,13 @@ const VipUpsell = () => {
   const inputClass = "w-full bg-input/50 border border-brand-silver/20 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-foreground font-body outline-none transition-all duration-300";
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="relative min-h-screen">
+      <div aria-hidden className="absolute inset-0 -z-10 gradient-dots-page" />
       {/* Congratulations banner */}
       <section className="bg-accent">
         <div className="max-w-funnel mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-8 text-center">
           <h1 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-accent-foreground">
-            🎉 You're Registered! One More Thing Before You Go...
+            <PartyPopper className="w-7 h-7 inline mr-2 text-accent-foreground" /> You're Registered! One More Thing Before You Go...
           </h1>
           <p className="mt-2 text-accent-foreground/80 font-body text-sm md:text-base">
             This offer only appears <strong>ONCE</strong> and disappears when you leave this page.
