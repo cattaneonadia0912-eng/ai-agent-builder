@@ -101,16 +101,15 @@ const Index = () => {
   return (
     <div className="relative min-h-screen">
       {/* ONE unified background — absolute so it spans full document height */}
-      <div aria-hidden className="absolute inset-0 -z-10 gradient-dots-page">
-        {/* Page-level orbs at %-based heights, cross section boundaries freely */}
-        <div className="absolute rounded-full bg-primary/10 blur-[130px] pointer-events-none"
-          style={{ left: "-8%", top: "10%", width: 500, height: 500, animation: "orb-drift-a 20s ease-in-out infinite" }} />
-        <div className="absolute rounded-full bg-accent/[0.07] blur-[110px] pointer-events-none"
-          style={{ right: "-8%", top: "35%", width: 440, height: 440, animation: "orb-drift-b 26s ease-in-out infinite" }} />
-        <div className="absolute rounded-full bg-primary/[0.09] blur-[120px] pointer-events-none"
-          style={{ left: "5%", top: "62%", width: 460, height: 460, animation: "orb-drift-a 23s ease-in-out infinite" }} />
-        <div className="absolute rounded-full bg-brand-spindle/[0.06] blur-[100px] pointer-events-none"
-          style={{ right: "0%", top: "82%", width: 400, height: 400, animation: "orb-drift-b 29s ease-in-out infinite" }} />
+      <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden gradient-dots-page">
+        <div className="absolute rounded-full bg-primary/10 blur-[130px] pointer-events-none w-[280px] h-[280px] md:w-[500px] md:h-[500px]"
+          style={{ left: "-8%", top: "10%", willChange: "transform", animation: "orb-drift-a 20s ease-in-out infinite" }} />
+        <div className="absolute rounded-full bg-accent/[0.07] blur-[110px] pointer-events-none w-[240px] h-[240px] md:w-[440px] md:h-[440px]"
+          style={{ right: "-8%", top: "35%", willChange: "transform", animation: "orb-drift-b 26s ease-in-out infinite" }} />
+        <div className="absolute rounded-full bg-primary/[0.09] blur-[120px] pointer-events-none w-[260px] h-[260px] md:w-[460px] md:h-[460px]"
+          style={{ left: "5%", top: "62%", willChange: "transform", animation: "orb-drift-a 23s ease-in-out infinite" }} />
+        <div className="absolute rounded-full bg-brand-spindle/[0.06] blur-[100px] pointer-events-none w-[220px] h-[220px] md:w-[400px] md:h-[400px]"
+          style={{ right: "0%", top: "82%", willChange: "transform", animation: "orb-drift-b 29s ease-in-out infinite" }} />
       </div>
 
       <StickyHeader />
