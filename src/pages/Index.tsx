@@ -1,7 +1,6 @@
-import { useState, useEffect, FormEvent, ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, ReactNode } from "react";
 import {
-  CheckCircle, Clock, Zap, Shield, Users, Award, BookOpen, Rocket,
+  CheckCircle, Clock, Zap, Shield, Users, Award, BookOpen, Rocket, // Shield kept for guarantee section
   Calendar, AlertTriangle, ChevronLeft, ChevronRight, Quote,
 } from "lucide-react";
 import CountdownTimer from "@/components/CountdownTimer";
@@ -55,39 +54,10 @@ function RevealOnScroll({ children, delay = 0 }: { children: ReactNode; delay?: 
 }
 
 const Index = () => {
-  const navigate = useNavigate();
-  const [form, setForm] = useState({ firstName: "", lastName: "", email: "", phone: "" });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [submitting, setSubmitting] = useState(false);
   const [slide, setSlide] = useState(0);
 
   const scrollToForm = () => {
     document.getElementById("registration-form")?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const validate = () => {
-    const e: Record<string, string> = {};
-    if (!form.firstName.trim()) e.firstName = "First name is required";
-    if (!form.lastName.trim()) e.lastName = "Last name is required";
-    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Valid email is required";
-    setErrors(e);
-    return Object.keys(e).length === 0;
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!validate()) return;
-    setSubmitting(true);
-    try {
-      await fetch("https://webhook.placeholder.com/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, source: "landing_page" }),
-      }).catch(() => {});
-      navigate("/vip-upsell");
-    } catch {
-      navigate("/vip-upsell");
-    }
   };
 
   const prevSlide = () => setSlide((s) => (s - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
@@ -116,7 +86,6 @@ const Index = () => {
 
       {/* HERO */}
       <section className="relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-card/60 via-transparent to-transparent" />
         <div className="relative z-10 max-w-funnel mx-auto px-4 md:px-6 lg:px-8 py-20 md:py-28">
           <div className="flex flex-col items-center text-center">
 
@@ -488,73 +457,25 @@ const Index = () => {
             </p>
           </RevealOnScroll>
 
-          <form
-            onSubmit={handleSubmit}
-            className="mt-12 md:mt-16 max-w-lg mx-auto space-y-5 glass-strong rounded-2xl p-6 md:p-8"
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm text-muted-foreground font-body mb-1.5">First Name *</label>
-                <input
-                  type="text"
-                  value={form.firstName}
-                  onChange={(e) => setForm((f) => ({ ...f, firstName: e.target.value }))}
-                  className="w-full bg-input/50 border border-brand-silver/20 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-foreground font-body outline-none transition-all duration-300"
-                  placeholder="First name"
-                />
-                {errors.firstName && <p className="text-accent text-xs mt-1">{errors.firstName}</p>}
-              </div>
-              <div>
-                <label className="block text-sm text-muted-foreground font-body mb-1.5">Last Name *</label>
-                <input
-                  type="text"
-                  value={form.lastName}
-                  onChange={(e) => setForm((f) => ({ ...f, lastName: e.target.value }))}
-                  className="w-full bg-input/50 border border-brand-silver/20 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-foreground font-body outline-none transition-all duration-300"
-                  placeholder="Last name"
-                />
-                {errors.lastName && <p className="text-accent text-xs mt-1">{errors.lastName}</p>}
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm text-muted-foreground font-body mb-1.5">Email Address *</label>
-              <input
-                type="email"
-                value={form.email}
-                onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-                className="w-full bg-input/50 border border-brand-silver/20 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-foreground font-body outline-none transition-all duration-300"
-                placeholder="you@example.com"
-              />
-              {errors.email && <p className="text-accent text-xs mt-1">{errors.email}</p>}
-            </div>
-
-            <div>
-              <label className="block text-sm text-muted-foreground font-body mb-1.5">Phone Number (optional)</label>
-              <input
-                type="tel"
-                value={form.phone}
-                onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
-                className="w-full bg-input/50 border border-brand-silver/20 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-foreground font-body outline-none transition-all duration-300"
-                placeholder="+1 (555) 000-0000"
-              />
-            </div>
-
-            <input type="hidden" name="source" value="landing_page" />
-
-            <button
-              type="submit"
-              disabled={submitting}
-              className="w-full bg-accent text-accent-foreground font-heading font-bold text-lg py-4 rounded-xl hover:scale-[1.02] hover:brightness-110 transition-all duration-300 animate-pulse-cta disabled:opacity-50 disabled:animate-none glow-red"
-            >
-              {submitting ? "Registering..." : "YES! SAVE MY FREE SEAT →"}
-            </button>
-
-            <p className="text-center text-muted-foreground text-xs font-body flex items-center justify-center gap-1.5">
-              <Shield className="w-3.5 h-3.5" />
-              Your information is 100% secure. No spam, ever.
-            </p>
-          </form>
+          <div className="mt-12 md:mt-16 max-w-lg mx-auto" style={{ height: 460 }}>
+            <iframe
+              src="https://api.leadconnectorhq.com/widget/form/V761v8gMl7m7iNj5NQDI"
+              style={{ width: "100%", height: "100%", border: "none", borderRadius: 25 }}
+              id="inline-V761v8gMl7m7iNj5NQDI"
+              data-layout="{'id':'INLINE'}"
+              data-trigger-type="alwaysShow"
+              data-trigger-value=""
+              data-activation-type="alwaysActivated"
+              data-activation-value=""
+              data-deactivation-type="neverDeactivate"
+              data-deactivation-value=""
+              data-form-name="Nadia Cattaneo - Free Webinar Seat"
+              data-height="460"
+              data-layout-iframe-id="inline-V761v8gMl7m7iNj5NQDI"
+              data-form-id="V761v8gMl7m7iNj5NQDI"
+              title="Nadia Cattaneo - Free Webinar Seat"
+            />
+          </div>
         </div>
       </section>
 

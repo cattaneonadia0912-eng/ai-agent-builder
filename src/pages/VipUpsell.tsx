@@ -1,32 +1,18 @@
-import { useState, FormEvent } from "react";
-import { useNavigate, useSearchParams, Link } from "react-router-dom";
-import { CheckCircle, Shield, AlertTriangle, CreditCard, Lock, PartyPopper } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
+import { CheckCircle, AlertTriangle, PartyPopper } from "lucide-react";
 import CountdownTimer from "@/components/CountdownTimer";
 import Footer from "@/components/Footer";
 
 const VipUpsell = () => {
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const seatsParam = searchParams.get("seats");
   const seatsRemaining = seatsParam ? parseInt(seatsParam, 10) : 47;
+  const email = searchParams.get("email") ?? "";
 
-  const [form, setForm] = useState({ name: "", email: "", card: "", expiry: "", cvv: "" });
-  const [submitting, setSubmitting] = useState(false);
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setSubmitting(true);
-    try {
-      await fetch("https://webhook.placeholder.com/vip-checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, source: "vip_upsell" }),
-      }).catch(() => {});
-      navigate("/thank-you?vip=true");
-    } catch {
-      navigate("/thank-you?vip=true");
-    }
-  };
+  // Append email as a pre-fill param so GHL links this submission to the same contact
+  const vipFormSrc = email
+    ? `https://api.leadconnectorhq.com/widget/form/1GSHXSK9YYJSOdoaJy3k?email=${encodeURIComponent(email)}`
+    : "https://api.leadconnectorhq.com/widget/form/1GSHXSK9YYJSOdoaJy3k";
 
   const vipBenefits = [
     { text: "VIP-Only Live Session: Advanced Agent Workflows + Real Case Studies", value: "$497" },
@@ -37,8 +23,6 @@ const VipUpsell = () => {
     { text: "3 Done-For-You Agent Templates — Ready to Deploy", value: "$297" },
     { text: "Post-Webinar Group Strategy Call Access", value: "$497" },
   ];
-
-  const inputClass = "w-full bg-input/50 border border-brand-silver/20 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-foreground font-body outline-none transition-all duration-300";
 
   return (
     <div className="relative min-h-screen">
@@ -129,63 +113,25 @@ const VipUpsell = () => {
               </p>
             </div>
 
-            {/* Checkout form */}
-            <form onSubmit={handleSubmit} className="glass-strong rounded-2xl p-6 md:p-8 space-y-4">
-              <div>
-                <label className="block text-sm text-muted-foreground font-body mb-1.5">Full Name</label>
-                <input type="text" value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} className={inputClass} placeholder="John Doe" required />
-              </div>
-              <div>
-                <label className="block text-sm text-muted-foreground font-body mb-1.5">Email Address</label>
-                <input type="email" value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} className={inputClass} placeholder="you@example.com" required />
-              </div>
-              <div>
-                <label className="block text-sm text-muted-foreground font-body mb-1.5 flex items-center gap-1.5">
-                  <CreditCard className="w-4 h-4" /> Card Number
-                </label>
-                <input type="text" value={form.card} onChange={(e) => setForm((f) => ({ ...f, card: e.target.value }))} className={inputClass} placeholder="4242 4242 4242 4242" required />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm text-muted-foreground font-body mb-1.5">Expiry</label>
-                  <input type="text" value={form.expiry} onChange={(e) => setForm((f) => ({ ...f, expiry: e.target.value }))} className={inputClass} placeholder="MM/YY" required />
-                </div>
-                <div>
-                  <label className="block text-sm text-muted-foreground font-body mb-1.5">CVV</label>
-                  <input type="text" value={form.cvv} onChange={(e) => setForm((f) => ({ ...f, cvv: e.target.value }))} className={inputClass} placeholder="123" required />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={submitting}
-                className="w-full bg-accent text-accent-foreground font-heading font-bold text-lg py-4 rounded-xl hover:scale-[1.02] hover:brightness-110 transition-all duration-300 animate-pulse-cta disabled:opacity-50 disabled:animate-none glow-red mt-2"
-              >
-                {submitting ? "Processing..." : "YES! UPGRADE MY ACCESS FOR $97 →"}
-              </button>
-
-              <p className="text-center text-muted-foreground text-xs font-body flex items-center justify-center gap-1.5">
-                <Lock className="w-3.5 h-3.5" />
-                Secure Checkout — Powered by Stripe | 30-Day Money-Back Guarantee
-              </p>
-            </form>
-
-            {/* Guarantee */}
-            <div className="mt-6 text-center">
-              <p className="text-muted-foreground text-sm font-body flex items-center justify-center gap-2">
-                <Shield className="w-4 h-4 text-primary" />
-                Not satisfied? Email us within 30 days and we'll refund every penny. No questions asked.
-              </p>
-            </div>
-
-            {/* Decline */}
-            <div className="mt-6 text-center">
-              <Link
-                to="/thank-you"
-                className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-300 underline underline-offset-4"
-              >
-                No thanks, I'll stick with free access and miss the VIP bonuses.
-              </Link>
+            {/* VIP checkout embed */}
+            <div style={{ height: 498 }}>
+              <iframe
+                src={vipFormSrc}
+                style={{ width: "100%", height: "100%", border: "none", borderRadius: 25 }}
+                id="inline-1GSHXSK9YYJSOdoaJy3k"
+                data-layout="{'id':'INLINE'}"
+                data-trigger-type="alwaysShow"
+                data-trigger-value=""
+                data-activation-type="alwaysActivated"
+                data-activation-value=""
+                data-deactivation-type="neverDeactivate"
+                data-deactivation-value=""
+                data-form-name="Nadia Cattaneo - VIP Seat Upsell"
+                data-height="498"
+                data-layout-iframe-id="inline-1GSHXSK9YYJSOdoaJy3k"
+                data-form-id="1GSHXSK9YYJSOdoaJy3k"
+                title="Nadia Cattaneo - VIP Seat Upsell"
+              />
             </div>
           </div>
         </div>

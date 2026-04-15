@@ -115,7 +115,6 @@
       200% 17.32px,
       100% 100%;
     background-position: 0px 0px, 5px 8.66px, 70% 40%, 20% 75%, 80% 20%, 55% 8.66px, 0 0;
-    animation: gradient-dots-page 30s ease-in-out infinite;
   }
 
   .font-heading {
