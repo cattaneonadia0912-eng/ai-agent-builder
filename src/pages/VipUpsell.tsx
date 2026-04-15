@@ -114,10 +114,10 @@ const VipUpsell = () => {
             </div>
 
             {/* VIP checkout embed */}
-            <div style={{ height: 498 }}>
+            <div className="relative" style={{ minHeight: 520 }}>
               <iframe
                 src={vipFormSrc}
-                style={{ width: "100%", height: "100%", border: "none", borderRadius: 25 }}
+                style={{ width: "100%", minHeight: 520, height: "auto", border: "none", borderRadius: 25 }}
                 id="inline-1GSHXSK9YYJSOdoaJy3k"
                 data-layout="{'id':'INLINE'}"
                 data-trigger-type="alwaysShow"
